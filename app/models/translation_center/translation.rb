@@ -1,7 +1,7 @@
 module TranslationCenter
   class Translation < ActiveRecord::Base
 
-    attr_accessible :value, :lang, :translation_key_id, :user_id, :status
+    #attr_accessible :value, :lang, :translation_key_id, :user_id, :status
     # serialize as we could store arrays
     serialize :value
 
@@ -20,7 +20,7 @@ module TranslationCenter
     validate :one_translation_per_lang_per_key, on: :create
 
     # returns accepted transations
-    scope :accepted, where(status: 'accepted')
+    scope :accepted, lambda { where(status: 'accepted') }
 
     # returns translations in a certain language
     scope :in, lambda { |lang| where(lang: lang.to_s.strip) }
